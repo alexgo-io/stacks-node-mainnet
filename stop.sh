@@ -6,4 +6,4 @@ cd $DIR
 echo 'Stopping stacks-node, timeout: 10mins'
 docker-compose down -t 600 stacks-blockchain
 docker-compose down stacks-blockchain-api
-docker-compose down postgres
+docker-compose down stacks-blockchain-postgres
