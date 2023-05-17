@@ -23,7 +23,7 @@ services:
       WAIT_HOSTS: '127.0.0.1:5432'
       PG_HOST: 127.0.0.1
       PG_PORT: 5432
-      PG_USER: alexgo
+      PG_USER: postgres
       PG_PASSWORD: 6nyi11z9tWbXJDYsVESHQfNVo
       PG_DATABASE: alexgo
       STACKS_CORE_EVENT_PORT: '3700'
@@ -58,7 +58,7 @@ services:
       STACKS_API_ENABLE_NFT_METADATA: 1
     network_mode: host
     volumes:
-      - ./Stacks.toml:/srv/Stacks.toml:ro
+      - ./config/Stacks.toml:/srv/Stacks.toml:ro
       - ./stacks-node:/srv/stacks-node/mainnet
       - ./wait:/usr/bin/wait:ro
-    command: sh -c "/wait && stacks-node start --config=/srv/Stacks.toml"
+    command: sh -c "wait && stacks-node start --config=/srv/Stacks.toml"
