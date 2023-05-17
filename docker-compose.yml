@@ -1,0 +1,64 @@
+version: '3.8'
+services:
+  stacks-blockchain-postgres:
+    restart: always
+    image: postgres:15.3-alpine
+    container_name: stacks_postgres
+    command: postgres -c 'max_connections=1000'
+    shm_size: 2gb
+    network_mode: host
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 6nyi11z9tWbXJDYsVESHQfNVo
+      POSTGRES_DB: alexgo
+    volumes:
+      - ./postgresql:/var/lib/postgresql
+  stacks-blockchain-api:
+    restart: always
+    image: bestmike007/stacks-blockchain-api:7.1.10
+    container_name: stacks_api
+    command: sh -c "/wait && node ./lib/index.js"
+    network_mode: host
+    environment:
+      WAIT_HOSTS: '127.0.0.1:5432'
+      PG_HOST: 127.0.0.1
+      PG_PORT: 5432
+      PG_USER: alexgo
+      PG_PASSWORD: 6nyi11z9tWbXJDYsVESHQfNVo
+      PG_DATABASE: alexgo
+      STACKS_CORE_EVENT_PORT: '3700'
+      STACKS_CORE_EVENT_HOST: http://0.0.0.0
+      STACKS_BLOCKCHAIN_API_PORT: '3999'
+      STACKS_BLOCKCHAIN_API_HOST: 0.0.0.0
+      STACKS_BLOCKCHAIN_API_DB: pg
+      STACKS_CORE_RPC_HOST: 127.0.0.1
+      STACKS_CORE_RPC_PORT: '20443'
+      STACKS_CHAIN_ID: '0x00000001'
+      STACKS_API_ENABLE_FT_METADATA: 1
+      STACKS_API_ENABLE_NFT_METADATA: 1
+      NODE_ENV: production
+    volumes:
+      - $PWD/wait:/wait
+  stacks-blockchain:
+    restart: always
+    image: blockstack/stacks-blockchain:2.3.0.0.2
+    container_name: stacks_node
+    environment:
+      WAIT_BEFORE: 3
+      WAIT_AFTER: 3
+      WAIT_HOSTS: "stacks-blockchain-api-event:3700"
+      NOP_BLOCKSTACK_DEBUG: 0
+      XBLOCKSTACK_DEBUG: 0
+      RUST_BACKTRACE: 0
+      STACKS_CHAIN_ID: "0x00000001"
+      V2_POX_MIN_AMOUNT_USTX: 90000000260
+      STACKS_CORE_RPC_HOST: 127.0.0.1
+      STACKS_CORE_RPC_PORT: 20443
+      STACKS_API_ENABLE_FT_METADATA: 1
+      STACKS_API_ENABLE_NFT_METADATA: 1
+    network_mode: host
+    volumes:
+      - ./Stacks.toml:/srv/Stacks.toml:ro
+      - ./stacks-node:/srv/stacks-node
+      - ./wait:/usr/bin/wait:ro
+    command: sh -c "/wait && stacks-node start --config=/srv/Stacks.toml"
