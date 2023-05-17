@@ -13,4 +13,5 @@ mkdir postgresql
 curl -o postgresql/latest.dump https://archive.hiro.so/mainnet/stacks-blockchain-api-pg/stacks-blockchain-api-pg-15-7.1.10-latest.dump
 
 docker-compose up -d stacks-blockchain-postgres
+WAIT_HOSTS='127.0.0.1:5432' ./wait
 docker exec -it stacks_postgres pg_restore -j 8 -Upostgres -v -C -d alexgo /var/lib/postgresql/latest.dump
