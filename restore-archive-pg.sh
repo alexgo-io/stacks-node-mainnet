@@ -14,4 +14,4 @@ curl -o postgresql/latest.dump https://archive.hiro.so/mainnet/stacks-blockchain
 
 docker-compose up -d stacks-blockchain-postgres
 WAIT_HOSTS='127.0.0.1:5432' ./wait
-docker exec -it stacks_postgres pg_restore -j 8 -Upostgres -v -C -d alexgo /var/lib/postgresql/latest.dump
+docker exec -it stacks_postgres pg_restore -j 16 -Upostgres -v -C -d alexgo /var/lib/postgresql/latest.dump
