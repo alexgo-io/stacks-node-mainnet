@@ -17,7 +17,7 @@ services:
     restart: always
     image: bestmike007/stacks-blockchain-api:7.1.10
     container_name: stacks_api
-    command: sh -c "/wait && node ./lib/index.js"
+    command: sh -c "wait && node ./lib/index.js"
     network_mode: host
     environment:
       WAIT_HOSTS: '127.0.0.1:5432'
@@ -38,7 +38,7 @@ services:
       STACKS_API_ENABLE_NFT_METADATA: 1
       NODE_ENV: production
     volumes:
-      - $PWD/wait:/wait
+      - ./wait:/usr/local/wait:ro
   stacks-blockchain:
     restart: always
     image: blockstack/stacks-blockchain:2.3.0.0.2
@@ -59,6 +59,6 @@ services:
     network_mode: host
     volumes:
       - ./Stacks.toml:/srv/Stacks.toml:ro
-      - ./stacks-node:/srv/stacks-node
+      - ./stacks-node:/srv/stacks-node/mainnet
       - ./wait:/usr/bin/wait:ro
     command: sh -c "/wait && stacks-node start --config=/srv/Stacks.toml"
