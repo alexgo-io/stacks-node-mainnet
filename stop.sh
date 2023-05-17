@@ -3,6 +3,7 @@ set -e
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 cd $DIR
 
-docker-compose down stacks-blockchain
+echo 'Stopping stacks-node, timeout: 10mins'
+docker-compose down -t 600 stacks-blockchain
 docker-compose down stacks-blockchain-api
 docker-compose down postgres
