@@ -7,6 +7,16 @@ References:
 
 Note: **use `stop.sh` to shutdown daemons!**
 
+## How to spin up a stacks-node from cold backup
+
+The scripts are tested on debian 11. Clone this repo and follow the steps.
+
+1. Clone this repo
+2. Run ./setup.sh
+3. Run ./restore-backup.sh
+4. Run `watch 'curl http://127.0.0.1:3999/extended/v1/status'`, wait until the block height matches that from `https://api.hiro.so/v2/info`
+5. Done
+
 ## How to spin up a stacks-node from archive
 
 The scripts works on debian 11. And always check if you're using the latest versions in `docker-compose.yml`.
