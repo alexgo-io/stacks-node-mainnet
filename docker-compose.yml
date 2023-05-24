@@ -44,10 +44,11 @@ services:
     restart: always
     image: blockstack/stacks-blockchain:2.3.0.0.2
     container_name: stacks_node
+    network_mode: host
     environment:
       WAIT_BEFORE: 3
       WAIT_AFTER: 3
-      WAIT_HOSTS: "stacks-blockchain-api-event:3700"
+      WAIT_HOSTS: "127.0.0.1:3700"
       NOP_BLOCKSTACK_DEBUG: 0
       XBLOCKSTACK_DEBUG: 0
       RUST_BACKTRACE: 0
@@ -57,7 +58,6 @@ services:
       STACKS_CORE_RPC_PORT: 20443
       STACKS_API_ENABLE_FT_METADATA: 1
       STACKS_API_ENABLE_NFT_METADATA: 1
-    network_mode: host
     volumes:
       - ./config/Stacks.toml:/srv/Stacks.toml:ro
       - ./stacks-node:/srv/stacks-node/mainnet
