@@ -60,6 +60,6 @@ services:
       STACKS_API_ENABLE_NFT_METADATA: 1
     volumes:
       - ./config/Stacks.toml:/srv/Stacks.toml:ro
-      - ./stacks-node:/srv/stacks-node/mainnet
+      - ./stacks-node/mainnet:/srv/stacks-node/mainnet
       - ./wait:/usr/bin/wait:ro
     command: sh -c "wait && stacks-node start --config=/srv/Stacks.toml"

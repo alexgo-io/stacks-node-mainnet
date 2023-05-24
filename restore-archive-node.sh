@@ -10,4 +10,5 @@ if [ -e stacks-node ]; then
 fi
 
 curl https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz | tar -zxv
-mv mainnet stacks-node
+mkdir stacks-node
+mv mainnet stacks-node/
