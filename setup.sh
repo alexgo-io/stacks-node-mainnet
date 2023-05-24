@@ -11,6 +11,7 @@ apt-get install -y dstat vim iftop direnv zip unzip ca-certificates curl git gnu
 echo "Port 2280" >> /etc/ssh/sshd_config
 echo "UseDNS no" >> /etc/ssh/sshd_config
 systemctl restart ssh
+ufw allow 3999/tcp
 ufw allow 20443/tcp
 ufw allow 20444/tcp
 ufw limit 2280
