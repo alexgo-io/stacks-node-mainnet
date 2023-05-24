@@ -3,7 +3,7 @@
 References:
 
 + https://docs.hiro.so/stacks-blockchain-api/how-to-guides/how-to-run-mainnet-node
-+ https://docs.hiro.so/references/hiro-archive
++ https://docs.hiro.so/hiro-archive/overview
 
 Note: **use `stop.sh` to shutdown daemons!**
 
