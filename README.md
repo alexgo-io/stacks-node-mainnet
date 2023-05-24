@@ -14,7 +14,7 @@ The scripts are tested on debian 11. Clone this repo and follow the steps.
 1. Clone this repo
 2. Run ./setup.sh
 3. Run ./restore-backup.sh
-4. Run `watch 'curl http://127.0.0.1:3999/extended/v1/status'`, wait until the block height matches that from `https://api.hiro.so/v2/info`
+4. Run `watch 'curl -s http://127.0.0.1:3999/extended/v1/status'`, wait until the block height matches that from `https://api.hiro.so/v2/info`
 5. Done
 
 ## How to spin up a stacks-node from archive
