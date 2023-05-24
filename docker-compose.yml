@@ -16,7 +16,7 @@ services:
       - ./postgresql/data:/var/lib/postgresql/data
   stacks-blockchain-api:
     restart: always
-    image: bestmike007/stacks-blockchain-api:7.1.10
+    image: bestmike007/stacks-blockchain-api:7.2.0
     container_name: stacks_api
     command: sh -c "wait && node ./lib/index.js"
     network_mode: host
@@ -42,7 +42,7 @@ services:
       - ./wait:/usr/local/wait:ro
   stacks-blockchain:
     restart: always
-    image: blockstack/stacks-blockchain:2.3.0.0.2
+    image: blockstack/stacks-blockchain:2.4.0.0.0
     container_name: stacks_node
     network_mode: host
     environment:
