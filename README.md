@@ -9,6 +9,8 @@ Note: **use `stop.sh` to shutdown daemons!**
 
 ## How to spin up a stacks-node from cold backup
 
+This is easiest and recommended way. The only caveat is the fixed password for postgres user. As long as you keep the firewall rejecting connections to postgres server, this won't be an issue; otherwise you'll have to change the password after restoring from backup and update the password configuration in `docker-compose.yml` accordingly.
+
 The scripts are tested on debian 11. Clone this repo and follow the steps.
 
 1. Run ./setup.sh and reboot the server
@@ -19,14 +21,14 @@ The scripts are tested on debian 11. Clone this repo and follow the steps.
 
 ## How to spin up a stacks-node from archive
 
-The scripts works on debian 11. And always check if you're using the latest versions in `docker-compose.yml`.
+The scripts are tested on debian 11. Remember to check if you're using the latest versions in `docker-compose.yml` before following the steps below.
 
 ```bash
 # prerequisites
 ./setup.sh
 ```
 
-Start 2 terminals to restore stacks node and postgres.
+Start 2 terminals to restore stacks node and postgres, this will take a long time.
 
 ```bash
 # terminal 1
@@ -47,8 +49,8 @@ Check if everything works.
 docker-compose logs -f
 ```
 
-Check if blocks catch up with official node: `https://api.hiro.so/v2/info`
+Wait until the block height catches up with official node: `https://api.hiro.so/v2/info`
 
 ```bash
-curl http://127.0.0.1:20443/v2/info
+watch 'curl -s http://127.0.0.1:3999/extended/v1/status'
 ```
