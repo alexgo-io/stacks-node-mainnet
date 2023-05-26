@@ -11,9 +11,9 @@ Note: **use `stop.sh` to shutdown daemons!**
 
 The scripts are tested on debian 11. Clone this repo and follow the steps.
 
-1. Clone this repo
-2. Run ./setup.sh
-3. Run ./restore-backup.sh
+1. Run ./setup.sh and reboot the server
+2. Restore the latest backup from https://github.com/alexgo-io/stacks-node-mainnet/releases
+3. Run ./start.sh
 4. Run `watch 'curl -s http://127.0.0.1:3999/extended/v1/status'`, wait until the block height matches that from `https://api.hiro.so/v2/info`
 5. Done
 
