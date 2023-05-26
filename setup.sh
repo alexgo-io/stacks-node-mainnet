@@ -8,13 +8,13 @@ apt-get update && apt-get dist-upgrade -y && apt-get autoremove -y && apt-get au
 
 apt-get install -y dstat vim iftop direnv zip unzip ca-certificates curl git gnupg lsb-release dirmngr gpg gawk jq tmux screen traceroute dnsutils iftop ufw
 
-echo "Port 2280" >> /etc/ssh/sshd_config
+echo "Port 20022" >> /etc/ssh/sshd_config
 echo "UseDNS no" >> /etc/ssh/sshd_config
 systemctl restart ssh
 ufw allow 3999/tcp
 ufw allow 20443/tcp
 ufw allow 20444/tcp
-ufw limit 2280
+ufw limit 20022
 echo y | ufw enable
 
 # docker
