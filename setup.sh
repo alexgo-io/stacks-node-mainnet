@@ -20,24 +20,30 @@ echo y | ufw enable
 # docker
 if [ ! -e /usr/local/bin/docker-compose ]; then
   mkdir -m 0755 -p /etc/apt/keyrings
-  curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-  echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
-  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+  if [ $(grep ubuntu /etc/os-release | wc -l) -gt 0 ]; then
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+    echo "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+      "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
+  else
+    curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
+      $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
+  fi
+  chmod a+r /etc/apt/keyrings/docker.gpg
   apt-get update && apt-get install -y docker-ce
+  ln -s /usr/libexec/docker/cli-plugins/docker-compose /usr/local/bin/docker-compose
   echo '{
-  "log-driver": "json-file",
-  "log-opts": {
+    "log-driver": "json-file",
+    "log-opts": {
       "max-size": "1024m"
-  },
-  "live-restore": true
+    },
+    "live-restore": true
   }' > /etc/docker/daemon.json
   systemctl enable --now docker
   systemctl restart docker
-  curl -SL https://github.com/docker/compose/releases/download/v2.18.0/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
-  chmod +x /usr/local/bin/docker-compose
 fi
 
 if [ ! -e "./wait" ]; then
-  wget -qO ./wait https://github.com/ufoscout/docker-compose-wait/releases/download/2.12.0/wait
+  wget -qO ./wait https://github.com/ufoscout/docker-compose-wait/releases/download/2.12.1/wait
   chmod +x ./wait
 fi

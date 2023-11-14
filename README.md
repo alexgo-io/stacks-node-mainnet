@@ -11,7 +11,7 @@ Note: **use `stop.sh` to shutdown daemons!**
 
 This is easiest and recommended way. The only caveat is the fixed password for postgres user. As long as you keep the firewall rejecting connections to postgres server, this won't be an issue; otherwise you'll have to change the password after restoring from backup and update the password configuration in `docker-compose.yml` accordingly.
 
-The scripts are tested on debian 11. Clone this repo and follow the steps.
+The scripts are tested on debian 12. Clone this repo and follow the steps.
 
 1. Run ./setup.sh and reboot the server
 2. Restore the latest backup from https://github.com/alexgo-io/stacks-node-mainnet/releases
@@ -21,7 +21,7 @@ The scripts are tested on debian 11. Clone this repo and follow the steps.
 
 ## How to spin up a stacks-node from archive
 
-The scripts are tested on debian 11. Remember to check if you're using the latest versions in `docker-compose.yml` before following the steps below.
+The scripts are tested on debian 12. Remember to check if you're using the latest versions in `docker-compose.yml` before following the steps below.
 
 ```bash
 # prerequisites
