@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.9"
 services:
   stacks-blockchain-postgres:
     restart: always
@@ -42,7 +42,7 @@ services:
       - ./wait:/usr/local/wait:ro
   stacks-blockchain:
     restart: always
-    image: blockstack/stacks-blockchain:2.4.0.0.4
+    image: bestmike007/stacks-blockchain:2.4.0.0.4
     container_name: stacks_node
     network_mode: host
     environment:

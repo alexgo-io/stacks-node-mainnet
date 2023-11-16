@@ -6,7 +6,7 @@ cd $DIR
 export DEBIAN_FRONTEND=noninteractive
 apt-get update && apt-get dist-upgrade -y && apt-get autoremove -y && apt-get autoclean
 
-apt-get install -y dstat vim iftop direnv zip unzip ca-certificates curl git gnupg lsb-release dirmngr gpg gawk jq tmux screen traceroute dnsutils iftop ufw
+apt-get install -y dstat vim zip unzip ca-certificates curl git gawk jq tmux screen traceroute dnsutils iftop ufw net-tools
 
 echo "Port 20022" >> /etc/ssh/sshd_config
 echo "UseDNS no" >> /etc/ssh/sshd_config
