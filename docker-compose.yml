@@ -2,7 +2,7 @@ version: "3.9"
 services:
   stacks-blockchain-postgres:
     restart: always
-    image: postgres:15.4-alpine
+    image: postgres:15.5-alpine
     container_name: stacks_postgres
     command: postgres -c 'max_connections=1000'
     shm_size: 2gb
@@ -18,10 +18,11 @@ services:
     restart: always
     image: bestmike007/stacks-blockchain-api:7.3.3
     container_name: stacks_api
-    command: sh -c "wait && node ./lib/index.js"
+    entrypoint: "/wait"
     network_mode: host
     environment:
       WAIT_HOSTS: "127.0.0.1:5432"
+      WAIT_COMMAND: "node ./lib/index.js"
       PG_HOST: 127.0.0.1
       PG_PORT: 5432
       PG_USER: postgres
@@ -39,16 +40,18 @@ services:
       STACKS_API_ENABLE_NFT_METADATA: 1
       NODE_ENV: production
     volumes:
-      - ./wait:/usr/local/wait:ro
+      - ./wait:/wait:ro
   stacks-blockchain:
     restart: always
     image: bestmike007/stacks-blockchain:2.4.0.0.4
     container_name: stacks_node
+    entrypoint: "/wait"
     network_mode: host
     environment:
       WAIT_BEFORE: 3
       WAIT_AFTER: 3
       WAIT_HOSTS: "127.0.0.1:3700"
+      WAIT_COMMAND: "stacks-node start --config=/srv/Stacks.toml"
       NOP_BLOCKSTACK_DEBUG: 0
       XBLOCKSTACK_DEBUG: 0
       RUST_BACKTRACE: 0
@@ -61,5 +64,4 @@ services:
     volumes:
       - ./config/Stacks.toml:/srv/Stacks.toml:ro
       - ./stacks-node/mainnet:/srv/stacks-node/mainnet
-      - ./wait:/usr/bin/wait:ro
-    command: sh -c "wait && stacks-node start --config=/srv/Stacks.toml"
+      - ./wait:/wait:ro
