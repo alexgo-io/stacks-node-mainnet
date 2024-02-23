@@ -16,7 +16,7 @@ services:
       - ./postgresql/data:/var/lib/postgresql/data
   stacks-blockchain-api:
     restart: always
-    image: bestmike007/stacks-blockchain-api:7.8.0
+    image: bestmike007/stacks-blockchain-api:7.8.2
     container_name: stacks_api
     entrypoint: "/wait"
     network_mode: host
