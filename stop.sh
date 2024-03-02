@@ -7,4 +7,4 @@ echo 'Stopping stacks-node, timeout: 60mins'
 docker stop -t 3600 stacks_node
 docker stop stacks_api
 docker stop stacks_postgres
-docker-compose down
+docker compose down
