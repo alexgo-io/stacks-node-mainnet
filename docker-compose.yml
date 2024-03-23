@@ -1,4 +1,3 @@
-version: "3.9"
 services:
   stacks-blockchain-postgres:
     restart: always
@@ -44,7 +43,7 @@ services:
       - ./wait:/wait:ro
   stacks-blockchain:
     restart: always
-    image: bestmike007/stacks-blockchain:2.4.0.0.4
+    image: bestmike007/stacks-blockchain:2.4.0.1.0
     container_name: stacks_node
     entrypoint: "/wait"
     network_mode: host
@@ -52,7 +51,7 @@ services:
       WAIT_BEFORE: 3
       WAIT_AFTER: 3
       WAIT_HOSTS: "127.0.0.1:3700"
-      WAIT_COMMAND: "stacks-node start --config=/srv/Stacks.toml"
+      WAIT_COMMAND: "stacks-node start --config /srv/Stacks.toml"
       NOP_BLOCKSTACK_DEBUG: 0
       XBLOCKSTACK_DEBUG: 0
       RUST_BACKTRACE: 0
