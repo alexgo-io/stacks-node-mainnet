@@ -43,7 +43,7 @@ services:
       - ./wait:/wait:ro
   stacks-blockchain:
     restart: always
-    image: bestmike007/stacks-blockchain:2.4.0.1.0
+    image: bestmike007/stacks-blockchain:2.4.0.0.4
     container_name: stacks_node
     entrypoint: "/wait"
     network_mode: host
