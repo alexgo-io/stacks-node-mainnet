@@ -1,3 +1,4 @@
 /stacks-node
 /postgresql
 /wait
+/config/Stacks-*.toml
