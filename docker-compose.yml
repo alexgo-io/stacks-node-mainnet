@@ -1,4 +1,12 @@
 services:
+  envoy:
+    restart: always
+    container_name: stacks_envoy
+    image: envoyproxy/envoy:v1.30.2
+    network_mode: "host"
+    command: --base-id 3999 --config-path /etc/envoy/envoy.yaml
+    volumes:
+      - "$PWD/config/envoy.yaml:/etc/envoy/envoy.yaml:ro"
   stacks-blockchain-postgres:
     restart: always
     image: postgres:15.6
@@ -31,7 +39,7 @@ services:
       PG_SCHEMA: stacks_blockchain_api
       STACKS_CORE_EVENT_PORT: "3700"
       STACKS_CORE_EVENT_HOST: http://0.0.0.0
-      STACKS_BLOCKCHAIN_API_PORT: "3999"
+      STACKS_BLOCKCHAIN_API_PORT: "23999"
       STACKS_BLOCKCHAIN_API_HOST: 0.0.0.0
       STACKS_CORE_RPC_HOST: 127.0.0.1
       STACKS_CORE_RPC_PORT: "20443"
