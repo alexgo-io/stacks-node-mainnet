@@ -2,3 +2,4 @@
 /postgresql
 /wait
 /config/Stacks-*.toml
+/.envrc
