@@ -63,12 +63,6 @@ services:
       NOP_BLOCKSTACK_DEBUG: 0
       XBLOCKSTACK_DEBUG: 0
       RUST_BACKTRACE: 0
-      STACKS_CHAIN_ID: "0x00000001"
-      V2_POX_MIN_AMOUNT_USTX: 90000000260
-      STACKS_CORE_RPC_HOST: 127.0.0.1
-      STACKS_CORE_RPC_PORT: 20443
-      STACKS_API_ENABLE_FT_METADATA: 1
-      STACKS_API_ENABLE_NFT_METADATA: 1
     volumes:
       - ${STACKS_NODE_TOML:-./config/Stacks.toml}:/srv/Stacks.toml:ro
       - ./stacks-node/mainnet:/srv/stacks-node/mainnet
