@@ -2,7 +2,7 @@ static_resources:
   listeners:
     - address:
         socket_address:
-          address: 0.0.0.0
+          address: "::"
           port_value: 3999
       filter_chains:
         - filters:

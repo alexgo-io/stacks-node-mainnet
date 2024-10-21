@@ -16,7 +16,7 @@ The scripts are tested on debian 12. Clone this repo and follow the steps.
 1. Run ./setup.sh and reboot the server
 2. Restore the latest backup from https://github.com/alexgo-io/stacks-node-mainnet/releases
 3. Run ./start.sh
-4. Run `watch 'curl -s http://127.0.0.1:3999/extended/v1/status'`, wait until the block height matches that from `https://api.hiro.so/v2/info`
+4. Run `watch 'curl -s http://127.0.0.1:3999/extended'`, wait until the block height matches that from `https://api.hiro.so/v2/info`
 5. Done
 
 ## How to spin up a stacks-node from archive
@@ -52,5 +52,5 @@ docker-compose logs -f
 Wait until the block height catches up with official node: `https://api.hiro.so/v2/info`
 
 ```bash
-watch 'curl -s http://127.0.0.1:3999/extended/v1/status'
+watch 'curl -s http://127.0.0.1:3999/extended'
 ```
