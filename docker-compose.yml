@@ -2,7 +2,7 @@ services:
   envoy:
     restart: always
     container_name: stacks_envoy
-    image: envoyproxy/envoy:v1.31.2
+    image: envoyproxy/envoy:v1.32.0
     network_mode: "host"
     command: --base-id 3999 --config-path /etc/envoy/envoy.yaml
     volumes:
@@ -24,7 +24,7 @@ services:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
   stacks-blockchain-api:
     restart: always
-    image: hirosystems/stacks-blockchain-api:8.1.1
+    image: hirosystems/stacks-blockchain-api:8.2.0
     container_name: stacks_api
     entrypoint: "/wait"
     network_mode: host
@@ -51,7 +51,7 @@ services:
       - ./wait:/wait:ro
   stacks-blockchain:
     restart: always
-    image: bestmike007/stacks-blockchain:2.5.0.0.7
+    image: bestmike007/stacks-blockchain:3.0.0.0.0
     container_name: stacks_node
     entrypoint: "/wait"
     network_mode: host
