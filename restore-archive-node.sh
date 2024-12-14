@@ -9,6 +9,6 @@ if [ -e stacks-node ]; then
   exit 0
 fi
 
-curl https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-3.1.0.0.1-latest.tar.gz | tar -zxv
+curl https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-3.1.0.0.2-latest.tar.gz | tar -zxv
 mkdir stacks-node
 mv mainnet stacks-node/
