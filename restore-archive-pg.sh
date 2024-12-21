@@ -10,7 +10,7 @@ if [ -e postresql ]; then
 fi
 
 mkdir postgresql
-curl -o postgresql/latest.dump https://archive.hiro.so/mainnet/stacks-blockchain-api-pg/stacks-blockchain-api-pg-15-8.3.0-latest.dump
+curl -o postgresql/latest.dump https://archive.hiro.so/mainnet/stacks-blockchain-api-pg/stacks-blockchain-api-pg-15-8.4.0-latest.dump
 
 docker-compose up -d stacks-blockchain-postgres
 WAIT_HOSTS='127.0.0.1:5432' ./wait
