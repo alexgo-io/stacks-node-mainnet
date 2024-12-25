@@ -2,7 +2,7 @@ services:
   envoy:
     restart: always
     container_name: stacks_envoy
-    image: envoyproxy/envoy:v1.32.2
+    image: envoyproxy/envoy:v1.32.3
     network_mode: "host"
     command: --base-id 3999 --config-path /etc/envoy/envoy.yaml
     volumes:
