@@ -65,5 +65,5 @@ services:
       RUST_BACKTRACE: 0
     volumes:
       - ${STACKS_NODE_TOML:-./config/Stacks.toml}:/srv/Stacks.toml:ro
-      - ./stacks-node/mainnet:/srv/stacks-node/mainnet
+      - ./stacks-node:/srv/stacks-node
       - ./wait:/wait:ro
