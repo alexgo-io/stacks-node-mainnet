@@ -6,15 +6,14 @@ cd $DIR
 export DEBIAN_FRONTEND=noninteractive
 apt-get update && apt-get dist-upgrade -y && apt-get autoremove -y && apt-get autoclean
 
-apt-get install -y dstat vim zip unzip ca-certificates curl git gawk jq tmux screen traceroute dnsutils iftop ufw net-tools
+apt-get install -y dstat vim zip unzip ca-certificates curl git gawk jq tmux screen traceroute dnsutils iftop iotop htop ufw net-tools
 
 echo "Port 20022" >> /etc/ssh/sshd_config
 echo "UseDNS no" >> /etc/ssh/sshd_config
 systemctl restart ssh
 ufw allow 3999/tcp
-ufw allow 20443/tcp
-ufw allow 20444/tcp
-ufw limit 20022
+ufw allow 20443:20444/tcp
+ufw limit 20022/tcp
 echo y | ufw enable
 
 # docker
@@ -30,7 +29,7 @@ if [ ! -e /usr/local/bin/docker-compose ]; then
       $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
   fi
   chmod a+r /etc/apt/keyrings/docker.gpg
-  apt-get update && apt-get install -y docker-ce
+  apt-get update && apt-get install -y docker-ce docker-compose-plugin
   ln -s /usr/libexec/docker/cli-plugins/docker-compose /usr/local/bin/docker-compose
   echo '{
     "log-driver": "json-file",
