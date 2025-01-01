@@ -34,12 +34,14 @@ static_resources:
                             prefix: "/"
                           route:
                             cluster: stacks_api
-                      cors:
-                        allow_origin_string_match:
-                          - prefix: "*"
-                        allow_methods: GET, PUT, DELETE, POST, OPTIONS
-                        allow_headers: Accept, Accept-Language, Content-Language, Content-Type, Range
-                        max_age: "1728000"
+                      typed_per_filter_config:
+                        envoy.filters.http.cors:
+                          "@type": type.googleapis.com/envoy.extensions.filters.http.cors.v3.CorsPolicy
+                          allow_origin_string_match:
+                            - prefix: "*"
+                          allow_methods: GET, PUT, DELETE, POST, OPTIONS
+                          allow_headers: Accept, Accept-Language, Content-Language, Content-Type, Range
+                          max_age: "1728000"
   clusters:
     - name: stacks_api
       type: STATIC
