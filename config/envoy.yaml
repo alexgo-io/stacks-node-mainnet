@@ -13,6 +13,10 @@ static_resources:
             - name: envoy.filters.network.http_connection_manager
               typed_config:
                 "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
+                internal_address_config:
+                  cidr_ranges:
+                    address_prefix: 10.0.0.0
+                    prefix_len: 8
                 stat_prefix: ingress_http
                 codec_type: auto
                 http_filters:
