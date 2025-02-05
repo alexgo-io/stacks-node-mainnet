@@ -38,6 +38,10 @@ static_resources:
                           route:
                             cluster: stacks_core
                         - match:
+                            prefix: "/v3"
+                          route:
+                            cluster: stacks_core
+                        - match:
                             prefix: "/"
                           route:
                             cluster: stacks_api
