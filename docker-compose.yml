@@ -2,7 +2,7 @@ services:
   envoy:
     restart: always
     container_name: stacks_envoy
-    image: envoyproxy/envoy:v1.33.0
+    image: envoyproxy/envoy:v1.33.2
     network_mode: "host"
     command: --base-id 3999 --config-path /etc/envoy/envoy.yaml
     volumes:
@@ -37,10 +37,10 @@ services:
       PG_PASSWORD: 6nyi11z9tWbXJDYsVESHQfNVo
       PG_DATABASE: stacks_blockchain_api
       PG_SCHEMA: stacks_blockchain_api
+      STACKS_CORE_EVENT_HOST: 127.0.0.1
       STACKS_CORE_EVENT_PORT: "3700"
-      STACKS_CORE_EVENT_HOST: http://0.0.0.0
+      STACKS_BLOCKCHAIN_API_HOST: 127.0.0.1
       STACKS_BLOCKCHAIN_API_PORT: "23999"
-      STACKS_BLOCKCHAIN_API_HOST: 0.0.0.0
       STACKS_CORE_RPC_HOST: 127.0.0.1
       STACKS_CORE_RPC_PORT: "20443"
       STACKS_CHAIN_ID: "0x00000001"
@@ -60,9 +60,6 @@ services:
       WAIT_AFTER: 3
       WAIT_HOSTS: "127.0.0.1:3700"
       WAIT_COMMAND: "stacks-node start --config /srv/Stacks.toml"
-      NOP_BLOCKSTACK_DEBUG: 0
-      XBLOCKSTACK_DEBUG: 0
-      RUST_BACKTRACE: 0
     volumes:
       - ${STACKS_NODE_TOML:-./config/Stacks.toml}:/srv/Stacks.toml:ro
       - ./stacks-node:/srv/stacks-node
