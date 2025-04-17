@@ -11,4 +11,4 @@ fi
 
 mkdir stacks-node
 cd stacks-node
-curl https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-3.1.0.0.7-latest.tar.gz | tar -zxv
+curl https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-3.1.0.0.8-latest.tar.gz | tar -zxv
