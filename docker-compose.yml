@@ -9,7 +9,7 @@ services:
       - "$PWD/config/envoy.yaml:/etc/envoy/envoy.yaml:ro"
   stacks-blockchain-postgres:
     restart: always
-    image: postgres:15.13
+    image: postgres:17.5
     container_name: stacks_postgres
     command: postgres -c 'max_connections=1000'
     shm_size: 2gb
