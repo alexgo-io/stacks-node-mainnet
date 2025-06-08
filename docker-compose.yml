@@ -9,7 +9,7 @@ services:
       - "$PWD/config/envoy.yaml:/etc/envoy/envoy.yaml:ro"
   stacks-blockchain-postgres:
     restart: always
-    image: postgres:17.5
+    image: postgres:17
     container_name: stacks_postgres
     command: postgres -c 'max_connections=1000'
     shm_size: 2gb
@@ -24,7 +24,7 @@ services:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
   stacks-blockchain-api:
     restart: always
-    image: bestmike007/stacks-blockchain-api:8.10.0
+    image: bestmike007/stacks-blockchain-api:8.11.1
     container_name: stacks_api
     entrypoint: "/wait"
     network_mode: host
