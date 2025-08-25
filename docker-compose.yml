@@ -2,14 +2,14 @@ services:
   envoy:
     restart: always
     container_name: stacks_envoy
-    image: envoyproxy/envoy:v1.35.0
+    image: envoyproxy/envoy:v1.35.1
     network_mode: "host"
     command: --base-id 3999 --config-path /etc/envoy/envoy.yaml
     volumes:
       - "$PWD/config/envoy.yaml:/etc/envoy/envoy.yaml:ro"
   stacks-blockchain-postgres:
     restart: always
-    image: postgres:17
+    image: postgres:17-bookworm
     container_name: stacks_postgres
     command: postgres -c 'max_connections=1000'
     shm_size: 2gb
@@ -24,7 +24,7 @@ services:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
   stacks-blockchain-api:
     restart: always
-    image: bestmike007/stacks-blockchain-api:8.11.5
+    image: bestmike007/stacks-blockchain-api:8.12.0
     container_name: stacks_api
     entrypoint: "/wait"
     network_mode: host
@@ -51,7 +51,7 @@ services:
       - ./wait:/wait:ro
   stacks-blockchain:
     restart: always
-    image: bestmike007/stacks-blockchain:3.2.0.0.0
+    image: bestmike007/stacks-blockchain:3.2.0.0.1
     container_name: stacks_node
     entrypoint: "/wait"
     network_mode: host
