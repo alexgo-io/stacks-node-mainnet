@@ -3,9 +3,9 @@ set -e
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 cd $DIR
 
-if [ -e postresql ]; then
+if [ -e postgresql ]; then
   echo "The stacks postgres is already running, this is for fresh start"
-  echo "If you need to reset and restore again, please stop postgres and remove ./postresql"
+  echo "If you need to reset and restore again, please stop postgres and remove ./postgresql"
   exit 0
 fi
 
