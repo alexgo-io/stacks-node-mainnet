@@ -1,0 +1,27 @@
+# Docker Compose Override Example
+# Copy to docker-compose.override.yml and customize as needed
+# This file is automatically merged with docker-compose.yml
+
+services:
+  stacks-blockchain-postgres:
+    environment:
+      # Override default credentials (recommended for production)
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-your_secure_password}
+    # Adjust shared memory size based on available RAM
+    # shm_size: 4gb
+
+  stacks-blockchain-api:
+    environment:
+      PG_PASSWORD: ${POSTGRES_PASSWORD:-your_secure_password}
+      # Enable additional metadata (increases storage usage)
+      # STACKS_API_ENABLE_FT_METADATA: 1
+      # STACKS_API_ENABLE_NFT_METADATA: 1
+
+  stacks-blockchain:
+    # Adjust resource limits as needed
+    # deploy:
+    #   resources:
+    #     limits:
+    #       memory: 8G
+    #     reservations:
+    #       memory: 4G
