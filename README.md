@@ -1,56 +1,108 @@
 # stacks-node-mainnet
 
-References:
+Docker-based setup for running a Stacks blockchain node on mainnet.
 
-- https://docs.stacks.co/guides-and-tutorials/nodes-and-miners
-- https://docs.hiro.so/stacks/archive
+## Prerequisites
 
-Note: **use `stop.sh` to shutdown daemons!**
+- **OS:** Debian 12 or Ubuntu 22.04+
+- **RAM:** Minimum 8GB, recommended 16GB
+- **Disk:** Minimum 200GB SSD
+- **Docker:** Installed automatically by setup script
 
-## How to spin up a stacks-node from cold backup
+## Quick Start
 
-This is easiest and recommended way. The only caveat is the fixed password for postgres user. As long as you keep the firewall rejecting connections to postgres server, this won't be an issue; otherwise you'll have to change the password after restoring from backup and update the password configuration in `docker-compose.yml` accordingly.
+### Option 1: From Cold Backup (Recommended)
 
-The scripts are tested on debian 12. Clone this repo and follow the steps.
-
-1. Run ./setup.sh and reboot the server
-2. Restore the latest backup from https://github.com/alexgo-io/stacks-node-mainnet/releases
-3. Run ./start.sh
-4. Run `watch 'curl -s http://127.0.0.1:3999/extended'`, wait until the block height matches that from `https://api.hiro.so/v2/info`
-5. Done
-
-## How to spin up a stacks-node from archive
-
-The scripts are tested on debian 12. Remember to check if you're using the latest versions in `docker-compose.yml` before following the steps below.
+This is the fastest method using pre-built snapshots.
 
 ```bash
-# prerequisites
-./setup.sh
+# Clone the repository
+git clone https://github.com/alexgo-io/stacks-node-mainnet.git
+cd stacks-node-mainnet
+
+# Install prerequisites (requires root)
+sudo ./setup.sh
+# Reboot the server after setup
+
+# Download latest backup from releases
+# https://github.com/alexgo-io/stacks-node-mainnet/releases
+
+# Start the node
+./start.sh
+
+# Check sync status
+./health-check.sh
 ```
 
-Start 2 terminals to restore stacks node and postgres, this will take a long time.
+### Option 2: From Archive
+
+Build from the official Hiro archive (takes longer).
 
 ```bash
-# terminal 1
+# Prerequisites
+sudo ./setup.sh
+
+# In terminal 1: Restore PostgreSQL
 ./restore-archive-pg.sh
-# terminal 2
+
+# In terminal 2: Restore Stacks node
 ./restore-archive-node.sh
-```
 
-Start all daemons
-
-```bash
+# Start all services
 ./start.sh
 ```
 
-Check if everything works.
+## Available Commands
+
+| Command | Description |
+|---------|-------------|
+| `./start.sh` | Start all services |
+| `./stop.sh` | Stop all services (graceful shutdown) |
+| `./health-check.sh` | Check node sync status |
+| `make help` | Show all available make commands |
+
+Or use the Makefile:
 
 ```bash
-docker-compose logs -f
+make start    # Start services
+make stop     # Stop services
+make logs     # View logs
+make health   # Check sync status
+make status   # Show container status
 ```
 
-Wait until the block height catches up with official node: `https://api.hiro.so/v2/info`
+## Configuration
 
-```bash
-watch 'curl -s http://127.0.0.1:3999/extended'
-```
+- Copy `.env.example` to `.env` for custom environment variables
+- Copy `docker-compose.override.yml.example` for Docker customizations
+- Edit `config/Stacks.toml` for node configuration
+
+## Security Note
+
+The default PostgreSQL password is set in `docker-compose.yml`. For production use:
+1. Change the password in `docker-compose.yml`
+2. Or use `docker-compose.override.yml` with environment variables
+3. Ensure firewall blocks external access to port 5432
+
+## Ports
+
+| Port | Service |
+|------|---------|
+| 3999 | Stacks API (public) |
+| 20443 | Stacks Node RPC |
+| 20444 | Stacks Node P2P |
+| 5432 | PostgreSQL (local only) |
+
+## Documentation
+
+- [CONTRIBUTING.md](CONTRIBUTING.md) - How to contribute
+- [TROUBLESHOOTING.md](TROUBLESHOOTING.md) - Common issues and solutions
+
+## References
+
+- [Stacks Nodes Documentation](https://docs.stacks.co/guides-and-tutorials/nodes-and-miners)
+- [Hiro Archive](https://docs.hiro.so/stacks/archive)
+
+## License
+
+[MIT](LICENSE)
