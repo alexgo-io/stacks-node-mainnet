@@ -23,7 +23,7 @@ services:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
   stacks-blockchain-api:
     restart: always
-    image: bestmike007/stacks-blockchain-api:8.13.6
+    image: bestmike007/stacks-blockchain-api:8.15.1
     container_name: stacks_api
     entrypoint: "/wait"
     network_mode: host
@@ -50,7 +50,7 @@ services:
       - ./wait:/wait:ro
   stacks-blockchain:
     restart: always
-    image: bestmike007/stacks-blockchain:3.3.0.0.6
+    image: bestmike007/stacks-blockchain:3.4.0.0.0
     container_name: stacks_node
     entrypoint: "/wait"
     network_mode: host
