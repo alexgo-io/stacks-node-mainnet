@@ -1,5 +1,20 @@
-/stacks-node
-/postgresql
-/wait
-/config/Stacks-*.toml
-/.envrc
+# Environment files
+.env
+.envrc
+
+# Data directories
+stacks-node/
+postgresql/
+
+# Docker compose override (user-specific)
+docker-compose.override.yml
+
+# Wait binary
+wait
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
