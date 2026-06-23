@@ -2,7 +2,7 @@ services:
   envoy:
     restart: always
     container_name: stacks_envoy
-    image: envoyproxy/envoy:v1.38.0
+    image: envoyproxy/envoy:v1.38.2
     network_mode: "host"
     command: --base-id 3999 --config-path /etc/envoy/envoy.yaml
     volumes:
@@ -38,6 +38,8 @@ services:
       PG_SCHEMA: stacks_blockchain_api
       STACKS_CORE_EVENT_HOST: 127.0.0.1
       STACKS_CORE_EVENT_PORT: "3700"
+      MEMPOOL_STATS_DEBOUNCE_INTERVAL: 15000
+      MEMPOOL_STATS_DEBOUNCE_MAX_INTERVAL: 60000
       STACKS_BLOCKCHAIN_API_HOST: 127.0.0.1
       STACKS_BLOCKCHAIN_API_PORT: "23999"
       STACKS_CORE_RPC_HOST: 127.0.0.1
