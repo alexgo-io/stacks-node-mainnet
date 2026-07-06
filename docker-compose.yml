@@ -2,7 +2,7 @@ services:
   envoy:
     restart: always
     container_name: stacks_envoy
-    image: envoyproxy/envoy:v1.38.2
+    image: envoyproxy/envoy:v1.38.3
     network_mode: "host"
     command: --base-id 3999 --config-path /etc/envoy/envoy.yaml
     volumes:
@@ -11,12 +11,12 @@ services:
     restart: always
     image: postgres:18-trixie
     container_name: stacks_postgres
-    command: postgres -c 'max_connections=1000'
+    command: postgres -c 'max_connections=1000' -p $STACKS_PG_PORT
     shm_size: 2gb
     network_mode: host
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 6nyi11z9tWbXJDYsVESHQfNVo
+      POSTGRES_PASSWORD: $STACKS_PG_PASSWORD
       POSTGRES_DB: stacks_blockchain_api
     volumes:
       - ./postgresql:/var/lib/postgresql
@@ -28,12 +28,12 @@ services:
     entrypoint: "/wait"
     network_mode: host
     environment:
-      WAIT_HOSTS: "127.0.0.1:5432"
+      WAIT_HOSTS: "127.0.0.1:$STACKS_PG_PORT"
       WAIT_COMMAND: "node ./lib/index.js"
       PG_HOST: 127.0.0.1
-      PG_PORT: 5432
-      PG_USER: postgres
-      PG_PASSWORD: 6nyi11z9tWbXJDYsVESHQfNVo
+      PG_PORT: $STACKS_PG_PORT
+      PG_USER: stacks_blockchain_api
+      PG_PASSWORD: $STACKS_PG_PASSWORD
       PG_DATABASE: stacks_blockchain_api
       PG_SCHEMA: stacks_blockchain_api
       STACKS_CORE_EVENT_HOST: 127.0.0.1
