@@ -9,7 +9,9 @@ Note: **use `stop.sh` to shutdown daemons!**
 
 ## How to spin up a stacks-node from cold backup
 
-This is easiest and recommended way. The only caveat is the fixed password for postgres user. As long as you keep the firewall rejecting connections to postgres server, this won't be an issue; otherwise you'll have to change the password after restoring from backup and update the password configuration in `docker-compose.yml` accordingly.
+Keep `STACKS_PG_PASSWORD` in the git-ignored `.envrc.override`, not in Compose.
+PostgreSQL loopback connections require SCRAM authentication, and the database
+container uses a no-connect seccomp profile. See `security/README.md`.
 
 The scripts are tested on debian 12. Clone this repo and follow the steps.
 

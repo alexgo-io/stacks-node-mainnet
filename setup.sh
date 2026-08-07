@@ -6,7 +6,7 @@ cd $DIR
 export DEBIAN_FRONTEND=noninteractive
 apt-get update && apt-get dist-upgrade -y && apt-get autoremove -y && apt-get autoclean
 
-apt-get install -y dstat vim zip unzip ca-certificates curl git gawk jq tmux screen traceroute dnsutils iftop iotop htop ufw net-tools
+apt-get install -y dstat vim zip unzip ca-certificates curl git gawk jq tmux screen traceroute dnsutils iftop iotop htop ufw net-tools postgresql-client
 
 ufw allow 20443:20444/tcp
 echo y | ufw enable

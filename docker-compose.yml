@@ -18,9 +18,12 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: $STACKS_PG_PASSWORD
       POSTGRES_DB: stacks_blockchain_api
+    security_opt:
+      - seccomp:${POSTGRES_SECCOMP_PROFILE:-./security/postgres-no-connect-seccomp.json}
     volumes:
       - ./postgresql:/var/lib/postgresql
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./init.sql:/docker-entrypoint-initdb.d/10-init.sql:ro
+      - ./init-password.sh:/docker-entrypoint-initdb.d/20-init-password.sh:ro
   stacks-blockchain-api:
     restart: always
     image: bestmike007/stacks-blockchain-api:9.0.2

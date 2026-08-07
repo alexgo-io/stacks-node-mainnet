@@ -1,6 +1,8 @@
-#!/bin/bash
-set -e
-DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
-cd $DIR
+#!/usr/bin/env bash
+set -Eeuo pipefail
 
-docker compose up -d
+readonly DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+cd "${DIR}"
+
+./scripts/start-postgres.sh
+docker compose up -d envoy stacks-blockchain-api stacks-blockchain
