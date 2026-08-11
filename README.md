@@ -13,13 +13,33 @@ Keep `STACKS_PG_PASSWORD` in the git-ignored `.envrc.override`, not in Compose.
 PostgreSQL loopback connections require SCRAM authentication, and the database
 container uses a no-connect seccomp profile. See `security/README.md`.
 
-The scripts are tested on debian 12. Clone this repo and follow the steps.
+The scripts are tested on Debian 12. Clone this repo and follow the steps.
 
-1. Run ./setup.sh and reboot the server
-2. Restore the latest backup from https://github.com/alexgo-io/stacks-node-mainnet/releases
-3. Run ./start.sh
-4. Run `watch 'curl -s http://127.0.0.1:3999/extended'`, wait until the block height matches that from `https://api.hiro.so/v2/info`
-5. Done
+1. Run `./setup.sh` and reboot the server.
+2. Put `STACKS_PG_PASSWORD` and the other host-specific settings in
+   `.envrc.override`, run `chmod 600 .envrc.override`, then run `direnv allow`.
+3. Restore both `postgresql/` and `stacks-node/` from the same cold-backup set at
+   https://github.com/alexgo-io/stacks-node-mainnet/releases.
+4. For the first start after restoring the backup, run:
+
+   ```console
+   direnv exec . ./start-from-cold-backup.sh
+   ```
+
+5. For every later normal start, continue to run:
+
+   ```console
+   direnv exec . ./start.sh
+   ```
+
+6. Run `watch 'curl -s http://127.0.0.1:3999/extended'` and wait until the block
+   height matches `https://api.hiro.so/v2/info`.
+
+The cold-backup wrapper starts PostgreSQL temporarily with no network and only
+an isolated Unix socket. It sets the restored `stacks_blockchain_api` role to
+`STACKS_PG_PASSWORD`, keeps the `postgres` role password `NULL`, stops recovery,
+and then calls the unchanged normal `start.sh`. It never enables trust in the
+restored cluster's production `pg_hba.conf`.
 
 ## How to spin up a stacks-node from archive
 

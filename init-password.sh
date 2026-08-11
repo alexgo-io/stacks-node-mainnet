@@ -9,4 +9,5 @@ psql --set ON_ERROR_STOP=1 \
   --dbname "${POSTGRES_DB}" <<'SQL'
 \getenv role_password POSTGRES_PASSWORD
 ALTER ROLE stacks_blockchain_api PASSWORD :'role_password';
+ALTER ROLE postgres PASSWORD NULL;
 SQL

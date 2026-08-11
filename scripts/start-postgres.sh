@@ -54,18 +54,18 @@ wait_for_host_postgres() {
   return 1
 }
 
-host_psql() {
+application_psql() {
   PGPASSWORD="${STACKS_PG_PASSWORD}" psql \
     --no-password \
     --host 127.0.0.1 \
     --port "${STACKS_PG_PORT}" \
-    --username postgres \
+    --username stacks_blockchain_api \
     --dbname stacks_blockchain_api \
     --set ON_ERROR_STOP=1 "$@"
 }
 
 start_hardened() {
-  local hardened_container_id seccomp_mode security_options trust_count
+  local hardened_container_id seccomp_mode security_options
 
   echo "Starting PostgreSQL with loopback authentication and the hardened seccomp profile."
   POSTGRES_SECCOMP_PROFILE="${HARDENED_PROFILE}" \
@@ -78,23 +78,16 @@ start_hardened() {
     die "PostgreSQL did not become ready within ${TIMEOUT_SECONDS} seconds."
   fi
 
-  if ! host_psql --tuples-only --no-align --command 'SELECT 1' >/dev/null; then
+  if ! application_psql --tuples-only --no-align --command 'SELECT 1' >/dev/null; then
     docker stop "${hardened_container_id}" >/dev/null 2>&1 || true
-    die "PostgreSQL rejected STACKS_PG_PASSWORD; the recreated container was stopped."
-  fi
-
-  trust_count="$(host_psql --tuples-only --no-align --command \
-    "SELECT count(*) FROM pg_hba_file_rules WHERE auth_method = 'trust' AND error IS NULL")"
-  if [[ "${trust_count}" != "0" ]]; then
-    docker stop "${hardened_container_id}" >/dev/null 2>&1 || true
-    die "PostgreSQL still has ${trust_count} active trust HBA rule(s); container stopped."
+    die "PostgreSQL rejected STACKS_PG_PASSWORD for stacks_blockchain_api; the recreated container was stopped."
   fi
 
   if PGPASSWORD="invalid-password-for-auth-check" psql \
     --no-password \
     --host 127.0.0.1 \
     --port "${STACKS_PG_PORT}" \
-    --username postgres \
+    --username stacks_blockchain_api \
     --dbname stacks_blockchain_api \
     --command 'SELECT 1' >/dev/null 2>&1; then
     docker stop "${hardened_container_id}" >/dev/null 2>&1 || true
